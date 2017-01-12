@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 
   # FIXME: Very dirty code to duplicate demo project
   def create_demo_project
-    project = Project.find(79)
+    project = Project.find(80)
 
     duplicate_project = project.deep_clone include: [ { artboards: :artboard_image_attachment }, :attachments]
     duplicate_project.save
