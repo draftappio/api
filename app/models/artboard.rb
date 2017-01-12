@@ -17,7 +17,7 @@ class Artboard < ApplicationRecord
     # processors: %i(thumbnail compression)
 
   # Validations
-  validates_uniqueness_of :object_id, scope: :project_id
+  # validates_uniqueness_of :object_id, scope: :project_id
 
   accepts_nested_attributes_for :notes
 
