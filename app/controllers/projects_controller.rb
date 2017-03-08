@@ -334,10 +334,8 @@ class ProjectsController < BaseController
   def add_team_member
     params[:project][:users].each do |user_data|
       user = User.find_by(email: user_data['email'])
-      unless user
-        user = User.invite!({email: user_data['email'], firstname: user_data['firstname'],
-                            lastname: user_data['lastname']}, current_user)
-      end
+      user = User.invite!({email: user_data['email'], firstname: user_data['firstname'],
+                          lastname: user_data['lastname']}, current_user)
 
       membership = Membership.find_or_initialize_by(user_id: user.id, team_id: @project.team_id, role: user_data['role'])
       membership.save if membership.new_record?
