@@ -50,4 +50,7 @@ Rails.application.routes.draw do
   resources :users do
     resources :notification_settings, only: %i(show update)
   end
+
+  post '/profile/update_avatar', to: 'profile#update_avatar'
+
 end

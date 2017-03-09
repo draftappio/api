@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
     convert_options: { thumb: '-gravity north -thumbnail 270x179^ -extent 270x179' },
     processors: %i(thumbnail compression)
 
+  validates_attachment :avatar, content_type: { content_type: /\Aimage\/.*\Z/ }
   # Callbacks
   after_create :create_demo_project
 
