@@ -13,6 +13,12 @@ The agnostic Rails API that powers the Draft Chrome extension, Angular web and m
 4. Create your `config/secrets.yml` config file
 5. Start the Rails server via `rails server or rails s`
 
+# Puma
+
+To install Puma:
+
+`gem install puma -v '3.6.0' -- --with-opt-dir=/usr/local/opt/openssl`
+
 # Secrets.yml
 You Should create a file under `config` directory for your application secrets. It should conform to the following style:
 
