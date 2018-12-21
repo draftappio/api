@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    #image: wazery/draft-api:develop
+    build: .
+    command: bundle exec rake db:create && bundle exec rake db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'
+    environment:
+      - S3_BUCKET_NAME=homify-assets-staging
+      - AWS_ACCESS_KEY_ID=AKIAJPF7N3UFIMH5TGBA
+      - AWS_SECRET_ACCESS_KEY=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
+      - AWS_REGION=eu-west-1
+      - SECRET_KEY_BASE=bf21b1056372e13e54c40b9ed8aa677dce1e9e43d494c069a461751714c873758f703f34bf14043e4ebfe414b71e5944ec06027b7079d0fc72a140edeae80272
+      - DATABASE_NAME=draft_prod_api
+      - DATABASE_USER=postgres
+      - POSTGRES_SERVICE_PORT=5432
+      - POSTGRES_SERVICE_HOST=localhost
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db

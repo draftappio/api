@@ -6,7 +6,7 @@ gem 'rails', '~> 5.0.1'
 gem 'pg'
 
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
+gem 'puma'#, '~> 3.0'
 
 # Background workers
 gem 'sidekiq'
@@ -38,7 +38,7 @@ gem 'deep_cloneable', '~> 2.2.2'
 gem 'figaro'
 
 # Decoration
-gem 'draper', github: 'drapergem/draper', branch: 'support-rails-api'
+gem 'draper', github: 'drapergem/draper'#, branch: 'support-rails-api'
 
 # Slugging
 gem 'friendly_id'
