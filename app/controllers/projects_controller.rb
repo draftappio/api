@@ -180,7 +180,7 @@ class ProjectsController < BaseController
                                owner: current_user)
 
       team = Team.create(project_id: @project.id)
-      Membership.create(user_id: current_user.id, team_id: team.id)
+      Membership.create(user_id: current_user.id, team_id: team.id, role: 1)
 
       # TODO: Return the location of the project sharing link
       return render json: @project.decorate.to_json
@@ -334,12 +334,10 @@ class ProjectsController < BaseController
   def add_team_member
     params[:project][:users].each do |user_data|
       user = User.find_by(email: user_data['email'])
-      unless user
-        user = User.invite!({email: user_data['email'], firstname: user_data['firstname'],
-                            lastname: user_data['lastname'], role: user_data['role']}, current_user)
-      end
+      user = User.invite!({email: user_data['email'], firstname: user_data['firstname'],
+                          lastname: user_data['lastname']}, current_user)
 
-      membership = Membership.find_or_initialize_by(user_id: user.id, team_id: @project.team_id)
+      membership = Membership.find_or_initialize_by(user_id: user.id, team_id: @project.team_id, role: user_data['role'])
       membership.save if membership.new_record?
     end
     render json: { team: @project.team.decorate.to_json }, status: :ok
@@ -370,8 +368,6 @@ class ProjectsController < BaseController
   error code: 404, desc: 'This user is not found!'
   ################# /Documentation #############################################
   def remove_team_member
-    return render json: { errors: ['You are not an admin for this project!'] }, status: :unprocessable_entity if current_user.role != 1
-
     user = User.find_by(email: params[:project]['email'])
     return render json: { errors: ['This user is not found!'] }, status: :unprocessable_entity unless user
 
@@ -379,6 +375,9 @@ class ProjectsController < BaseController
 
     membership = Membership.find_by(user_id: user.id, team_id: @project.team_id)
     return render json: { errors: ['This user is not a member of this project!'] }, status: 422 unless membership
+
+    current_user_membership = Membership.find_by(user_id: current_user.id, team_id: @project.team_id)
+    return render json: { errors: ['You are not an admin for this project!'] }, status: :unprocessable_entity if current_user_membership.role != 1
 
     membership.destroy
     render json: { team: @project.team.decorate.to_json }, status: :ok

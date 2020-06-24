@@ -3,7 +3,7 @@ class TeamDecorator < Draper::Decorator
 
   def to_json
     ret         = as_json(except: %i(project_id))
-    ret[:users] = users.decorate.to_json
+    ret[:users] = users.decorate.to_team_members_json(id)
 
     ret
   end

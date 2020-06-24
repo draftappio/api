@@ -1,8 +1,4 @@
 class User < ActiveRecord::Base
-  ROLE = {
-    member: 0,
-    admin: 1
-  }
 
   devise :omniauthable, :database_authenticatable, :recoverable,
     :trackable, :validatable, :registerable, :rememberable,

@@ -343,7 +343,7 @@
                                         <div style="text-align:center;font-family:'Poppins',Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">Hello <%= @resource.firstname || @resource.name %>,</div>
                                         <br>
                                         <% invited_by_user = User.find(@resource.invited_by_id) %>
-                                        <div style="text-align:center;font-family:'Poppins',Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">You are invited by, <%= invited_by_user.name  %> to join <br> <a href="https://draftapp.io">Draft App</a></div>
+                                        <div style="text-align:center;font-family:'Poppins',Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;">You are invited by, <%= invited_by_user.firstname || invited_by_user.name %> to join <br> <a href="https://draftapp.io">Draft App</a></div>
                                       </td>
 
                                       <% if @resource.invitation_due_at %>

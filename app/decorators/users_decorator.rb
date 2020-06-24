@@ -4,4 +4,9 @@ class UsersDecorator < Draper::CollectionDecorator
       user.decorate.to_index_json
     end
   end
+  def to_team_members_json(team_id)
+    object.map do |user|
+      user.decorate.to_index_json(team_id)
+    end
+  end
 end

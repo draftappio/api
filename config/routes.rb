@@ -44,8 +44,10 @@ Rails.application.routes.draw do
     end
   end
 
-  mount_devise_token_auth_for 'User', at: 'auth',
+  mount_devise_token_auth_for 'User', at: 'auth', skip: [:invitations],
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, path: "auth", only: [:invitations],
+    controllers: { invitations: 'users/invitations' }
 
   resources :users do
     resources :notification_settings, only: %i(show update)
